@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        body {
+            background-image: url(img/fukuoka2.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            align-items: flex-end;
+            font-family: "游ゴシック", "YuGothic", "メイリオ", meiryo, sans-serif;
+            font-size: 120%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        ul {
+            width: 450px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        li {
+            text-align: center;
+            background-color: antiquewhite;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+
+        #startbtn {
+            margin: 0 auto;
+            width: 200px;
+            height: 50px;
+            font-size: 16px;
+            color: #fff;
+            background: rgb(234, 150, 114);
+            border-radius: 3em;
+            border: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+        }
+
+        .point {
+            margin-top: 150px;
+            display: none;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: rgb(210, 49, 49);
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- 質問項目と回答はjsで -->
+    <h1>スマートライフ診断</h1>
+    
+    <div class="start-btn-box">
+    <!--要件１：診断をはじめるが表示されている。設問は非表示 -->
+        <button id="startbtn">診断をはじめる</button>
+    </div>
+    <h2></h2>
+    <ul></ul>
+
+    <div id="container"></div>
+
+    <div class="point">スマートライフ診断：
+        <p></p>
+        <span data-point-num></span>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <script>
+        $(function () {
+            let count = 0;
+            let point = 0;
+            const list = [
+                {
+                    'title': '住民票が必要！そんな時、お得なのはどこ？',
+                    'answer': [
+                        'コンビニ',
+                        '証明書発行コーナー',
+                        '居住地の区役所や出張所'
+                    ]
+                },
+                {
+                    'title': 'パスポートの期限が切れる！すぐに手続きに行けない時どうする？',
+                    'answer': [
+                        'マイナポータルで申請する',
+                        '家族に代理で手続きを頼む',
+                        'あきらめる'
+                    ]
+                },
+                {
+                    'title': '引越し！子どもが小さくて手続きが大変な時どうする？',
+                    'answer': [
+                        'マイナポータルで時短する',
+                        '親に子どもを預けて1日で終わらせる',
+                        '親に代理で手続きしてもらう',
+                    ]
+                },
+                {
+                    'title': '老後の生活が心配。そんな時どうする？',
+                    'answer': [
+                        'ねんきんネットで受給額を調べる',
+                        'ファイナンシャル・プランナーに相談する',
+                        '年金保険に加入する'
+                    ]
+                },
+                {
+                    'title': '粗大ゴミを出した！そんな時、どうする？',
+                    'answer': [
+                        '福岡市のLINEで申込み&支払い',
+                        '粗大ゴミセンターに電話',
+                        'レンタル倉庫に保管する'
+                    ]
+                }, {
+                    'title': '子どもの小学校の献立を確認したい！そんな時、どうする？',
+                    'answer': [
+                        '福岡市のLINEで小学校給食献立を登録しておく',
+                        '献立のプリントを探す',
+                        'ママ友に聞く'
+                    ]
+                }, {
+                    'title': '福岡市内をバスで移動したい。その時、何で調べる？',
+                    'answer': [
+                        'マイルートで調べる',
+                        '西鉄バスナビで調べる',
+                        '地図アプリで調べる'
+                    ]
+                }, {
+                    'title': '福岡市内を終日満喫したい。お得な方法をどれ？',
+                    'answer': [
+                        'チャリチャリで移動する',
+                        'バス、地下鉄の終日券を使う',
+                        'もちろんマイカードライブ'
+                    ]
+                }, {
+                    'title': '急に雨に降られて止みそうにない！傘がないときどうする？',
+                    'answer': [
+                        'アイカサを借りる',
+                        'コンビニで傘を買う',
+                        'ぬれる'
+                    ]
+                }, {
+                    'title': '引越しで口座の住所変更！こんな時、どうする？',
+                    'answer': [
+                        'マイナポータルで楽々変更',
+                        '隙間時間で銀行訪問',
+                        '放置する'
+                    ]
+                // }, {
+                //     'title': '電子マネーの残高が分からない！そんな時、どうしてる？',
+                //     'answer': [
+                //         '残高確認アプリでチェックする',
+                //         '残高確認アプリでチェックする',
+                //         'とりあえずチャージする'
+                //     ]
+                // }, {
+                //     'title': '財布を忘れた！どうしても現金が必要なとき、どうしてる？',
+                //     'answer': [
+                //         'PayPayにチャージしてコンビニATMから引き出す',
+                //         '自宅に取りに帰る',
+                //         '知り合いに連絡して貸してもらう'
+                //     ]
+                // }, {
+                //     'title': 'スマホを紛失！そんな時、まず、どうする？',
+                //     'answer': [
+                //         '携帯ショップに駆け込む',
+                //         'パソコンでスマホの場所を調べる',
+                //         '警察に行く'
+                //     ],
+                // }, {
+                //     'title': '外出先でスマホのバッテリーが10%を切った！そんな時どうする？',
+                //     'answer': [
+                //         'ChargSPOTを探して充電する',
+                //         'カフェの充電スポットで充電する',
+                //         'あきらめる'
+                //     ],
+                // }, {
+                //     'title': '外出先での水分補給、どうしてる？',
+                //     'answer': [
+                //         '水筒を持ち歩き、給水スポットで給水する',
+                //         'コンビニなどで購入する',
+                //         'がまんする'
+                //     ],
+                // }, {
+                //     'title': '災害の時に自分のスマホだけ警報が届かない！そんな時、どうする？',
+                //     'answer': [
+                //         '迷惑メール設定を変更する',
+                //         '携帯ショップで相談する',
+                //         '家族に届くから気にしない'
+                //     ],
+                // }, {
+                //     'title': '体調がすぐれない！何科に行けばよいか分からないとき、どうする？',
+                //     'answer': [
+                //         'HELPOの無料相談で聞いてみる',
+                //         'ユビーで調べる',
+                //         'ネットで検索する'
+                //     ],
+                // }, {
+                //     'title': '押し入れにしまっている引き出物を処分したい。そんな時、どうする？',
+                //     'answer': [
+                //         'メルカリに出品する',
+                //         'ブックオフに持っていく',
+                //         'ゴミとして処分する'
+                //     ],
+                // }, {
+                //     'title': '新聞の切り抜きが面倒。そんな時、どうする？',
+                //     'answer': [
+                //         '電子版に切り替えて、アプリで記事を保存する',
+                //         'ネットで同じ記事を探して保存する',
+                //         'あきらめる'
+                //     ],
+                // }, {
+                //     'title': 'お薬手帳を忘れがち！そんな時、どうする？',
+                //     'answer': [
+                //         'マイナポータルに記録されるので気にしない',
+                //         'お薬手帳アプリを使う',
+                //         'お薬手帳を常にカバンに入れておく'
+                //     ],
+                // }, {
+                //     'title': 'お薬の飲み忘れてしまう！そんな時、どうしてる？',
+                //     'answer': [
+                //         'お薬手帳アプリのリマンダーを設定する',
+                //         '曜日と朝昼夜ごとのお薬BOXに薬を入れる',
+                //         '家族に気かけてもらう'
+                //     ],
+                // }, {
+                //     'title': 'スマホの画面が見づらい時、どうする？',
+                //     'answer': [
+                //         '設定で文字サイズを大きく、太くする',
+                //         'メガネをかける',
+                //         '我慢する'
+                //     ],
+                // }, {
+                //     'title': '災害時、スマホが繋がらない！公衆電話を探すとき、どうする？',
+                //     'answer': [
+                //         '地図アプリで検索する',
+                //         '近くを探し回る',
+                //         '近くにいる人に聞く'
+                //     ],
+                // }, {
+                //     'title': '夕飯の準備中、食材が足りない！そんな時、どうする？',
+                //     'answer': [
+                //         'フードデリバリーで配達してもらう',
+                //         '代替品を検索サイトで調べる',
+                //         'あきらめる'
+                //     ],
+                // }, {
+                //     'title': 'ガードレールが折れてる！そんな時、どうしてる？',
+                //     'answer': [
+                //         '福岡市のLINEから写真を撮って報告する',
+                //         '自治会長に連絡する',
+                //         'スルーする'
+                //     ],
+                // }, {
+                //     'title': '課税証明が必要！そんな時、どうする？',
+                //     'answer': [
+                //         '福岡市のLINEで調べる',
+                //         'ネットで申請予約する',
+                //         '居住地の区役所に行く'
+                //     ],
+                // }, {
+                //     'title': '家族に3万円を仕送り。お得で便利なのはどれ？',
+                //     'answer': [
+                //         'ことらで送金',
+                //         'コード決済アプリで送金',
+                //         'ATMで送金'
+                //     ],
+                // }, {
+                //     'title': '家族の予定が分からないとき、どうしてる？',
+                //     'answer': [
+                //         'TimeTreeで共有',
+                //         'Googleカレンダーで共有',
+                //         '毎日家族に確認する'
+                //     ],
+                // }, {
+                //     'title': '外出先でネットを使いたい！どれを使ってる？',
+                //     'answer': [
+                //         '契約している通信会社の回線',
+                //         'ポケットWi-Fi',
+                //         '無料で使えるWi-Fi'
+                //     ],
+                // }, {
+                //     'title': '英語で道を聞かれて困った！そんな時、どうする？',
+                //     'answer': [
+                //         'LINE英語通訳や通訳アプリで通訳してもう',
+                //         '英語のわかる人がいないか周りの人に声をかける',
+                //         '逃げる'
+                //     ],
+                // },
+
+            ];
+
+            //「診断をはじめる」をクリックしたら設問が表示される
+
+            $('#startbtn').on('click', function () {
+                // リストの最初の項目を表示する
+                $('h2,ul').show();
+                $('#startbtn').hide();
+
+            });
+
+            //カウントを取っていく
+            function render(count) {
+                $('li').remove();
+                $('h2').text(list[count]['title']); //h2のテキストにタイトルを入れる
+                list[count]['answer'].forEach(function (text) {
+                    const li = `<li>${text}</li>`;
+                    $('ul').append(li);
+                });
+            }
+            render(0);
+
+            function pointGet(li_index) {
+                switch (li_index) {
+                    case 0:
+                        return 1;
+                        break;
+                    case 1:
+                        return 0;
+                        break;
+                    case 2:
+                        return -1;
+                        break;
+
+                }
+            }
+            // 診断結果
+            function point_text(point) {
+                let text = '強強！！周りの人も助けてあげて♪';
+                if (point > 7) {
+                    text = 'お、いいね！能ある鷹は爪を隠さなくていいから！'
+                }
+                if (point <= 7 && point >= 4) {
+                    text = 'いいね！でも、もっとイケるでしょう！'
+                }
+                if (point <= 3 && point >= 0) {
+                    text = '伸び代サイコー！'
+                }
+                if (point < -6) {
+                    text = '時には、新しいものも試してみてね(^_-)'
+                }
+                return text;
+            }
+
+            $('body').on('click', 'li', function () {
+                const li_index = $('li').index(this);
+                point += pointGet(li_index);
+                if (count < list.length - 1) {
+                    count++;
+                    render(count);
+                } else {
+                    $('[data-point-num]').text(point_text(point));
+                    $('ul,h2').hide();
+                    $('.point').fadeIn();
+                    console.log('end');
+                }
+
+            });
+
+
+        })
+    </script>
+
+</body>
+
+</html>
