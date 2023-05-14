@@ -235,12 +235,11 @@ $(function () {
         $('li').remove();
         $('h2').text(list[count]['title']); //h2のテキストにタイトルを入れる
         list[count]['answer'].forEach(function (text) {
-            const li = `<li>${text}</li>`;
+            const li = `<li li > ${text}</li > `;
             $('ul').append(li);
         });
     }
     render(0);
-
 
     // カウントルール
     function pointGet(li_index) {
@@ -276,21 +275,6 @@ $(function () {
             console.log('end');
         }
     });
-    // $('body').on('click', 'li', function () {
-    //     const li_index = $('li').index(this);
-    //     point += pointGet(li_index);
-    //     if (count < list.length - ) {
-    //         count++;
-    //         render(count);
-    //     } else {
-    //         const resultText = point_text(point);
-    //         $('[data-point-num]').text(resultText); // data-point-num属性を持つ要素に結果を設定する
-    //         $('h2,ul').hide();
-    //         $('.point').fadeIn();
-    //         console.log('end');
-    //     }
-    // });
-
 
     // 診断結果
     function point_text(point) {
@@ -298,97 +282,70 @@ $(function () {
         if (point >= 8) {
             text = 'Level.5';
             $('#level5').show();
+            console.log(point)
         } else if (point <= 7 && point >= 4) {
             text = 'Level.4'
             $('#level4').show();
+            console.log(point)
         } else if (point <= 3 && point >= -1) {
             text = 'Level.3'
             $('#level3').show();
+            console.log(point)
         } else if (point <= -2 && point >= -6) {
             text = 'Level.2'
             $('#level2').show();
+            console.log(point)
         } else if (point < -6) {
             text = 'Level.1'
             $('#level1').show();
+            console.log(point)
         }
         return text;
     }
+    //「診断結果」をクリックしたらモーダルが表示される
+    $('.point').on('click', function () {
 
-
-    $(function () {
         // 変数に要素を入れる
-        var open = $('.modal-open'),
+        let open = $('.modal-open'),
             close = $('.modal-close'),
             container = $('.modal-container');
 
+        //診断結果のテキストを取得する
+        let resultText = $('[data-point-num]').text();
 
-        //開くボタンをクリックしたらモーダルを表示する
-        open.on('click', function () {
-            var diagnosisResult = getDiagnosisResult();
-
-            // 診断結果を取得する関数 (point_text()を利用)
-            function getDiagnosisResult() {
-                var point = 10; // 診断のポイントを設定する
-                return point_text(point);
-            }
-            // モーダルを表示する
-            function showModal(diagnosisResult) {
-                const container = $('.modal-container');
-                container.removeClass('modalOne , modalTwo , modalThree , modalFour , modalFive');
-
-                // 診断結果に応じて異なるモーダルを表示する
-                if (diagnosisResult === 'level5') {
-                    // level5に対応するモーダルを表示する処理
-                    container.addClass('modalOne');
-                } else if (diagnosisResult === 'level4') {
-                    // level4に対応するモーダルを表示する処理
-                    container.addClass('modalTwo');
-                } else if (diagnosisResult === 'level3') {
-                    // level3に対応するモーダルを表示する処理
-                    container.addClass('modalThree');
-                } else if (diagnosisResult === 'level2') {
-                    // level2に対応するモーダルを表示する処理
-                    container.addClass('modalFour');
-                } else if (diagnosisResult === 'level1') {
-                    // level1に対応するモーダルを表示する処理
-                    container.addClass('modalFive');
-                    // return false;
-                }
-                container.addClass('active');
-            }
-
-
-            // 閉じるボタンをクリックしたらモーダルを閉じる
-            function closeModal() {
-                const container = $('.modal-container');
-                container.removeClass('active');
-                hideAllLevels();
-            }
-            // // 全てのレベルを非表示にする
-            // function hideAllLevels() {
-            //     $('.level1, .level2, .level3, .level4, .level5').hide();
-            // }
-
-            $(function () {
-                // 診断結果を取得する関数 (point_text()を利用)
-                function getDiagnosisResult() {
-                    var point = point; // 診断のポイントを設定する (適切な値に変更する必要があります)
-                    return point_text(point);
-                }
-                // モーダルの外側をクリックしたらモーダルを閉じる
-                $(document).on('click', function (e) {
-                    if (!$(e.target).closest('.modal-body').length) {
-                        closeModal();
-                    }
-                });
-            });
-
-            // 全てのレベルを非表示にする関数
-            function hideAllLevels() {
-                $('.level1, .level2, .level3, .level4, .level5').hide();
-            }
-
-            container.addClass('active');
-        });
+        switch (resultText) {
+            case 'level.5':
+                showModal('modalFive');
+                break;
+            case 'level.4':
+                showModal('modalFour');
+                break;
+            case 'level.3':
+                showModal('modalTree');
+                break;
+            case 'level.2':
+                showModal('modalTwo');
+                break;
+            default:
+                showModal('modalOne');
+            // break;
+        }
     });
-})
+});
+
+// 閉じるボタンをクリックしたらモーダルを閉じる
+function closeModal() {
+    const container = $('.modal-container');
+    container.removeClass('active');
+    // hideAllLevels();
+}
+
+// モーダルの外側をクリックしたらモーダルを閉じる
+$(document).on('click', function (e) {
+    if (!$(e.target).closest('.modal-body').length) {
+        closeModal();
+    }
+});
+
+
+// container.addClass('active');
