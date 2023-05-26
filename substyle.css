@@ -4,14 +4,8 @@
      list-style-type: none;
  }
 
- html,
- body {
-     width: 100%;
-     height: 100%;
- }
-
  /* スマホ用css */
- @media screen and (min-width: 350px) {
+ @media screen and (min-width: 481px) {
      /* 481px以上に適用されるcss */
  }
 
@@ -19,18 +13,17 @@
      width: 100%;
  }
 
- @media screen and(min-width: 960px) {
-     /* 960px以上に適用されるcss */
+ @media screen and(min-width: 560px) {
+     /* 560px以上に適用されるcss */
  }
 
  .img {
-     max-width: auto;
-     height: auto;
+     max-width: 560px;
  }
 
  /*  共通  */
  body {
-     width: 960px;
+     width: 560px;
      margin: auto;
      height: auto;
      font-family: "游ゴシック", "YuGothic", "メイリオ", meiryo, sans-serif;
@@ -52,9 +45,8 @@
      font-size: 26px;
      font-weight: bold;
      margin-top: 30px;
-     margin-bottom: 50px;
+     margin-bottom: 10px;
      display: none;
-     
  }
 
  h3 {
@@ -77,49 +69,12 @@
      margin-bottom: 10px;
  }
 
- /*  設問と選択肢  */
- #s_btn {
-     margin: 0 auto;
-     margin-top: 50px;
-     width: 200px;
-     height: 50px;
-     font-size: 16px;
-     font-weight: bold;
-     color: #fff;
-     background: rgb(234, 150, 114);
-     border-radius: 3em;
-     border: 0;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     cursor: pointer;
- }
-
- ul {
-     width: 450px;
-     margin: 0 auto;
-     display: none;
- }
-
- li {
-     text-align: center;
-     background-color: antiquewhite;
-     font-weight: bold;
-     font-size: 18px;
-     padding: 20px 0;
-     margin-top: 25px;
- }
-
- .title {
-     max-width: 100px;
- }
-
  /*  終了とSNS  */
- .wrapper {
+ /* .wrapper {
      width: 560px;
      margin: auto;
      text-align: center;
- }
+ } */
 
  #r_btn {
      margin: 0 auto;
@@ -160,35 +115,6 @@
      color: rgb(210, 49, 49);
  }
 
- .container {
-     display: none;
- }
-
- /*  モーダルウィンドウ  */
- /* モーダル本体とモーダルの外側の背景 */
- .modal-container {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     text-align: center;
-     background: rgba(216, 206, 206, 0.5);
-     padding: 40px 20px;
-     overflow: auto;
-     opacity: 0;
-     visibility: hidden;
-     transition: .3s;
-     box-sizing: border-box;
- }
-
- /*モーダル本体の擬似要素の指定*/
- .modal-container:before {
-     content: "";
-     display: inline-block;
-     vertical-align: middle;
-     height: 100%;
- }
 
  /*モーダル本体に「active」クラス付与した時のスタイル*/
  .modal-container.active {
@@ -196,45 +122,10 @@
      visibility: visible;
  }
 
- /*モーダル枠の指定*/
- .modal-body {
-     position: relative;
-     display: inline-block;
-     vertical-align: middle;
-     max-width: 500px;
-     width: 90%;
- }
-
- .modal-content .img {
-     background: #f1f1f1;
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
-
- .modal-content p {
-     margin-bottom: 10px;
-     text-align: left;
- }
-
  .modal-content p:last-child {
      margin-bottom: 0;
  }
 
- .modal-body {
-     background: #FFF;
-     overflow-y: auto;
-     padding: 20px 25px;
-     width: 90%;
-     max-width: 500px;
-     position: absolute;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     max-height: 600px;
-     animation: show 0.6s linear 0s;
-     filter: drop-shadow(0px 2px 6px #777);
- }
 
  /* モダールを開く */
  .m-open-box {
@@ -262,25 +153,6 @@
      display: none;
  }
 
- .modal-close {
-     position: absolute;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     top: -40px;
-     right: -40px;
-     width: 40px;
-     height: 40px;
-     color: #ff0000;
-     font-size: 40px;
-     cursor: pointer;
- }
-
- .modal-close:hover,
- .modal-close:focus {
-     text-decoration: none;
-     cursor: pointer;
- }
 
  .modal-title {
      color: #FFF;
@@ -288,7 +160,8 @@
 
  .level_btn {
      margin: auto;
-     margin-bottom: 10px;
+     margin-top: 30px;
+     margin-bottom: 30px;
      width: 120px;
      height: 35px;
      font-size: 16px;
@@ -303,14 +176,25 @@
      text-decoration: none;
  }
 
- /*  フッダー  */
- .f-fukuoka {
-     max-width: auto;
-     height: auto;
-     background-image: url(img/fukuoka2.png);
-     background-repeat: no-repeat;
+ .top_btn {
+     margin-left: auto;
+     margin-top: 30px;
+     margin-bottom: 30px;
+     width: 100px;
+     height: 35px;
+     font-size: 16px;
+     border-radius: 3em;
+     border: 0;
+     background-color: rgb(73, 73, 73);
+     color: white;
+     display: flex;
+     justify-content: center;
      align-items: center;
+     cursor: pointer;
+     text-decoration: none;
  }
+
+ /*  フッダー  */
 
  #copy {
      font-size: 14px;

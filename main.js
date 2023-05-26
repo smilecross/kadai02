@@ -3,22 +3,25 @@ $('button').on('click', function () {
     $('#s_btn').hide();
     // リストの最初の項目を表示する 
     $('h2,ul').show();
+    $('.message').hide();
     // render(0);
+    
 });
+
 
 //設問が順次表示される。10ー30問
 $(function () {
     let count = 0;
     let point = 0;
     const list = [
-        {
-            'title': '住民票が必要！そんな時、お得なのはどこ？',
-            'answer': [
-                'コンビニ',
-                '証明書発行コーナー',
-                '居住地の区役所や出張所'
-            ]
-        },
+        // {
+        //     'title': '住民票が必要！そんな時、お得なのはどこ？',
+        //     'answer': [
+        //         'コンビニ',
+        //         '証明書発行コーナー',
+        //         '居住地の区役所や出張所'
+        //     ]
+        // },
         {
             'title': 'パスポートの期限が切れる！すぐに手続きに行けない時どうする？',
             'answer': [
@@ -86,14 +89,15 @@ $(function () {
                 '放置する'
             ]
         },
+        {
+            'title': '電子マネーの残高が分からない！そんな時、どうしてる？',
+            'answer': [
+                '残高確認アプリでチェックする',
+                '残高確認アプリでチェックする',
+                'とりあえずチャージする'
+            ]
+        }, 
         // {
-        //     'title': '電子マネーの残高が分からない！そんな時、どうしてる？',
-        //     'answer': [
-        //         '残高確認アプリでチェックする',
-        //         '残高確認アプリでチェックする',
-        //         'とりあえずチャージする'
-        //     ]
-        // }, {
         //     'title': '財布を忘れた！どうしても現金が必要なとき、どうしてる？',
         //     'answer': [
         //         'PayPayにチャージしてコンビニATMから引き出す',
@@ -302,35 +306,58 @@ $(function () {
         }
         return text;
     }
-    //「診断結果」をクリックしたらモーダルが表示される
-    $('.point').on('click', function () {
 
-        // 変数に要素を入れる
-        let open = $('.modal-open'),
-            close = $('.modal-close'),
-            container = $('.modal-container');
-
-        //診断結果のテキストを取得する
-        let resultText = $('[data-point-num]').text();
-
-        switch (resultText) {
-            case 'level.5':
-                showModal('modalFive');
-                break;
-            case 'level.4':
-                showModal('modalFour');
-                break;
-            case 'level.3':
-                showModal('modalTree');
-                break;
-            case 'level.2':
-                showModal('modalTwo');
-                break;
-            default:
-                showModal('modalOne');
-            // break;
-        }
+    // ボタンをクリックしたとき
+    $('#level5').click(function () {
+        window.location.href = 'level5.html';
     });
+
+    $('#level4').click(function () {
+        window.location.href = 'level4.html';
+    });
+
+    $('#level3').click(function () {
+        window.location.href = 'level3.html';
+    });
+
+    $('#level2').click(function () {
+        window.location.href = 'level2.html';
+    });
+
+    $('#level1').click(function () {
+        window.location.href = 'level1.html';
+    });
+
+
+    // //「診断結果」をクリックしたらモーダルが表示される
+    // $('.point').on('click', function () {
+
+    //     // 変数に要素を入れる
+    //     let open = $('.modal-open'),
+    //         close = $('.modal-close'),
+    //         container = $('.modal-container');
+
+    //     //診断結果のテキストを取得する
+    //     let resultText = $('[data-point-num]').text();
+
+    //     switch (resultText) {
+    //         case 'level.5':
+    //             showModal('modalFive');
+    //             break;
+    //         case 'level.4':
+    //             showModal('modalFour');
+    //             break;
+    //         case 'level.3':
+    //             showModal('modalTree');
+    //             break;
+    //         case 'level.2':
+    //             showModal('modalTwo');
+    //             break;
+    //         default:
+    //             showModal('modalOne');
+    //         //break;
+    //     }
+    // });
 });
 
 // 閉じるボタンをクリックしたらモーダルを閉じる
