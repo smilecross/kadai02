@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
@@ -183,3 +184,214 @@
 </body>
 
 </html>
+=======
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        body {
+            background-image: url(img/fukuoka2.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            align-items: flex-end;
+            font-family: "游ゴシック", "YuGothic", "メイリオ", meiryo, sans-serif;
+            font-size: 120%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 100px;
+            margin-bottom: 40px;
+        }
+
+        ul {
+            width: 450px;
+            margin: 0 auto;
+        }
+
+        li {
+            text-align: center;
+            background-color: antiquewhite;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+
+        .point {
+            margin-top: 100px;
+            display: none;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: rgb(210, 49, 49);
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 質問項目と回答はjsで -->
+    <h1></h1>
+    <ul></ul>
+    <div class="point">スマートライフ診断：
+        <p></p>
+        <span data-point-num></span>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+
+    <script>
+        $(function () {
+            let count = 0;
+            let point = 0;
+            const list = [
+                {
+                    'title': 'Q1. 住民票が必要！そんな時、お得なのはどこ？',
+                    'answer': [
+                        'コンビニ',
+                        '証明書発行コーナー',
+                        '居住地の区役所や出張所'
+                    ]
+                },
+                {
+                    'title': 'Q2. パスポートの期限が切れる！すぐに手続きに行けない時どうする？',
+                    'answer': [
+                        'マイナポータルで申請する',
+                        '家族に代理で手続きを頼む',
+                        'あきらめる'
+                    ]
+                },
+                {
+                    'title': 'Q3. 引越し！子どもが小さくて手続きが大変な時どうする？',
+                    'answer': [
+                        'マイナポータルで時短する',
+                        '親に子どもを預けて1日で終わらせる',
+                        '親に代理で手続きしてもらう',
+                    ]
+                },
+                {
+                    'title': 'Q4. 老後の生活が心配。そんな時どうする？',
+                    'answer': [
+                        'ねんきんネットで受給額を調べる',
+                        'ファイナンシャル・プランナーに相談する',
+                        '年金保険に加入する'
+                    ]
+                },
+                {
+                    'title': 'Q5. 粗大ゴミを出した！そんな時、どうする？',
+                    'answer': [
+                        '福岡市のLINEで申込み&支払い',
+                        '粗大ゴミセンターに電話',
+                        'レンタル倉庫に保管する'
+                    ]
+                }, {
+                    'title': 'Q6. 子どもの小学校の献立を確認したい！そんな時、どうする？',
+                    'answer': [
+                        '福岡市のLINEで小学校給食献立を登録しておく',
+                        '献立のプリントを探す',
+                        'ママ友に聞く'
+                    ]
+                }, {
+                    'title': 'Q7. 福岡市内をバスで移動したい。その時、何で調べる？',
+                    'answer': [
+                        'マイルートで調べる',
+                        '西鉄バスナビで調べる',
+                        '地図アプリで調べる'
+                    ]
+                }, {
+                    'title': 'Q8. 福岡市内を終日満喫したい。お得な方法をどれ？',
+                    'answer': [
+                        'チャリチャリで移動する',
+                        'バス、地下鉄の終日券を使う',
+                        'もちろんマイカードライブ'
+                    ]
+                }, {
+                    'title': 'Q9. 急に雨に降られて止みそうにない！傘がないときどうする？',
+                    'answer': [
+                        'アイカサを借りる',
+                        'コンビニで傘を買う',
+                        'ぬれる'
+                    ]
+                }, {
+                    'title': 'Q10. 引越しで口座の住所変更！こんな時、どうする？',
+                    'answer': [
+                        'マイナポータルで楽々変更',
+                        '隙間時間で銀行訪問',
+                        '放置する'
+                    ]
+                },
+            ];
+
+            //カウントを取っていく
+            function render(count) {
+                $('li').remove();
+                $('h1').text(list[count]['title']); //h1のテキストにタイトルを入れる
+                list[count]['answer'].forEach(function (text) {
+                    const li = `<li>${text}</li>`;
+                    $('ul').append(li);
+                });
+            }
+            render(0);
+
+            function pointGet(li_index) {
+                switch (li_index) {
+                    case 0:
+                        return 1;
+                        break;
+                    case 1:
+                        return 0;
+                        break;
+                    case 2:
+                        return -1;
+                        break;
+
+                }
+            }
+            // 診断結果
+            function point_text(point) {
+                let text = '強強！！周りの人も助けてあげて♪';
+                if (point > 7) {
+                    text = 'お、いいね！能ある鷹は爪を隠さなくていいから！'
+                }
+                if (point <= 7 && point >= 4) {
+                    text = 'いいね！でも、もっとイケるでしょう！'
+                }
+                if (point <= 3 && point >= 0) {
+                    text = '伸び代サイコー！'
+                }
+                if (point < -6) {
+                    text = '時には、新しいものも試してみてね(^_-)'
+                }
+                return text;
+            }
+
+            $('body').on('click', 'li', function () {
+                const li_index = $('li').index(this);
+                point += pointGet(li_index);
+                if (count < list.length - 1) {
+                    count++;
+                    render(count);
+                } else {
+                    $('[data-point-num]').text(point_text(point));
+                    $('ul,h1').hide();
+                    $('.point').fadeIn();
+                    console.log('end');
+                }
+
+            });
+
+
+        })
+    </script>
+
+</body>
+
+</html>
+
